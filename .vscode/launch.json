@@ -12,6 +12,12 @@
       "webRoot": "${workspaceFolder}"
     },
     {
+      "command": "docker compose up",
+      "name": "Postgres Container",
+      "request": "launch",
+      "type": "node-terminal"
+    },
+    {
       "command": "BROWSER=none pnpm dev",
       "name": "pnpm dev",
       "request": "launch",
