@@ -9,13 +9,30 @@ datasource db {
 }
 
 model Event {
-  id        String   @id @default(cuid())
+  id        Int      @id @default(autoincrement())
   name      String
   date      DateTime
   location  String
   creator   String
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
+  Ticket    Ticket[]
 
   @@index([date])
+}
+
+model User {
+  id      Int      @id @default(autoincrement())
+  email   String   @unique
+  name    String
+  tickets Ticket[]
+}
+
+model Ticket {
+  id           Int      @id @default(autoincrement())
+  userId       Int
+  eventId      Int
+  purchaseDate DateTime
+  user         User     @relation(fields: [userId], references: [id])
+  event        Event    @relation(fields: [eventId], references: [id])
 }
