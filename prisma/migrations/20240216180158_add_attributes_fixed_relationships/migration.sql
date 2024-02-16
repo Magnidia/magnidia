@@ -3,7 +3,6 @@
 
   - You are about to drop the column `creator` on the `Event` table. All the data in the column will be lost.
   - You are about to drop the column `location` on the `Event` table. All the data in the column will be lost.
-  - A unique constraint covering the columns `[userId]` on the table `Event` will be added. If there are existing duplicate values, this will fail.
   - Added the required column `valid` to the `Ticket` table without a default value. This is not possible if the table is not empty.
   - Added the required column `address` to the `User` table without a default value. This is not possible if the table is not empty.
   - Added the required column `profPic` to the `User` table without a default value. This is not possible if the table is not empty.
@@ -28,9 +27,6 @@ ALTER TABLE "Ticket" ADD COLUMN     "valid" BOOLEAN NOT NULL;
 ALTER TABLE "User" ADD COLUMN     "address" TEXT NOT NULL,
 ADD COLUMN     "profPic" TEXT NOT NULL,
 ADD COLUMN     "username" TEXT NOT NULL DEFAULT 'No username provided';
-
--- CreateIndex
-CREATE UNIQUE INDEX "Event_userId_key" ON "Event"("userId");
 
 -- AddForeignKey
 ALTER TABLE "Event" ADD CONSTRAINT "Event_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
