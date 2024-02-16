@@ -10,16 +10,16 @@ datasource db {
 
 model Event {
   id          Int      @id @default(autoincrement())
-  userId      Int
+  userId      Int      @unique @default(0)
   name        String
-  price       Float
+  price       Float    @default(0)
   date        DateTime
   images      String[]
-  description String
-  address     String
-  cityState   String
-  latitude    Float
-  longitude   Float
+  description String   @default("No description provided")
+  address     String   @default("Not specified")
+  cityState   String   @default("Not specified")
+  latitude    Float    @default(0)
+  longitude   Float    @default(0)
   creator     User     @relation(fields: [userId], references: [id])
   createdAt   DateTime @default(now())
   updatedAt   DateTime @default(now()) @updatedAt
@@ -32,7 +32,7 @@ model User {
   id       Int      @id @default(autoincrement())
   email    String   @unique
   name     String
-  username String
+  username String   @default("No username provided")
   profPic  String // url to an image in an S3 bucket: Profile Picture
   address  String
   tickets  Ticket[]
