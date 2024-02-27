@@ -1,0 +1,80 @@
+import { NextRequest, NextResponse } from "next/server";
+import db from "@/utils/db";
+
+
+export const GET = async (req: NextRequest, { params }: { params: { eventid: string } }) => {
+  try {
+      console.log(params.eventid)
+      const event = await db.event.findUnique({
+        where: {
+          id: params.eventid, 
+        }, 
+      });
+      
+
+      if (event) {
+        return NextResponse.json(
+          { message: "Successfully retrieved event.", data: event },
+          { status: 200 }
+        );
+      } else {
+        return NextResponse.json(
+          { message: `Event with ID ${params.eventid} not found.` },
+          { status: 404 }
+        );
+      }
+    } catch (error) {  
+      return NextResponse.json(
+        { message: "Unable to retrieve event." },
+        { status: 500 }
+      );
+    }
+  };
+  
+
+export const PUT = async (req: NextRequest, { params }: { params: { eventid: string } }) => {
+ try {
+    const data = await req.json();
+    const event = await db.event.update({
+      where: { id: params.eventid },
+      data: { 
+          name: data.name,
+          date: data.date,
+          location: data.location,
+          creator: data.creator,
+          
+       }, 
+   
+    });    
+
+    return NextResponse.json(
+      { message: "Successfully updated the event.", data: event },
+      { status: 201 }
+    );
+  } catch (error) {
+    return NextResponse.json(
+      { message: "Unable to update the event." },
+      { status: 500 }
+    );
+  }
+} 
+
+    
+    export const DELETE = async (req: NextRequest, { params }: { params: { eventid: string } }) => {
+      try {
+        const event = await db.event.delete({
+          where: {   
+            id: params.eventid, 
+          }, 
+        });
+        return NextResponse.json(
+          { message: `Successfully deleted ${event.name}.` },
+          { status: 200 }
+        );
+      } catch (error) {
+         return NextResponse.json(
+          { message: "Unable to delete the event." },
+          { status: 500 }
+        );
+      }
+}; 
