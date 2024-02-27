@@ -18,8 +18,8 @@
       "type": "node-terminal"
     },
     {
-      "command": "psql -h localhost -p 5432 -U postgres -d magnidia_dev",
-      "name": "Connect to DB",
+      "command": "npx prisma studio",
+      "name": "Prisma Studio",
       "request": "launch",
       "type": "node-terminal"
     },
