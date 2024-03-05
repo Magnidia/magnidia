@@ -1,44 +1,56 @@
-import { NextRequest, NextResponse } from "next/server";
+// api/event/image.ts
+import { NextApiRequest, NextApiResponse } from 'next';
 import multer from 'multer';
 import AWS from 'aws-sdk';
-import fs from 'fs/promises';
 
-const upload = multer({ dest: "uplaods/"});
+
+declare module 'next' {
+  interface NextApiRequest {
+    file: any;
+  }
+}
+
+const upload = multer({ dest: 'uploads/' });
+
+// Configure AWS
+AWS.config.update({
+  accessKeyId: 'AKIAVRUVTI43FDMHUBWB',
+  secretAccessKey: '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',
+  region: 'us-east-2',
+});
+
 const s3 = new AWS.S3();
 
-const handler = async (req: NextRequest, res: NextResponse) => {
-  try {
-    await upload.single('image')(req as any, res as any, () => {});
-
-    const uploadedFile = (req as any).file;
-
-    if (!uploadedFile) {
-      return (req as any).status(400).json({ error: 'No file uploaded' });
-    }
-
-    // Read the file content using fs.promises
-    const fileContent = await fs.readFile(uploadedFile.path);
-
-    // AWS S3 upload parameters
-    const params: AWS.S3.PutObjectRequest = {
-      Bucket: 'magnidia-imageupload',
-      Key: `uploads/${uploadedFile.filename}`,
-      Body: fileContent,
-      ContentType: uploadedFile.mimetype,
-      ACL: 'public-read', // This makes the uploaded file publicly accessible
-    };
-    s3.upload(params, (uploadErr, data) => {
-      if (uploadErr) {
-        return (req as any).status(500).json({ error: 'Error uploading file to S3' });
-      }
-
-      // Send the URL of the uploaded image in the API response
-      (req as any).json({ imageUrl: data.Location });
-    });
-  } catch (error) {
-    console.error(error);
-    (req as any).status(500).json({ error: "Internal servor error" });
-  }
+export const config = {
+  api: {
+    bodyParser: false, // Disable default bodyParser to handle file uploads
+  },
 };
 
-export default handler;
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+  if (req.method === 'POST') {
+    try {
+      await upload.single('image')(req as any, res as any, () => {}); // Casting due to multer type mismatch
+
+      // Access the uploaded file information using req.file
+      const uploadedFile = req.file as Express.Multer.File;
+
+      // Implement AWS S3 upload logic
+      const params = {
+        Bucket: 'magnidia-imageupload',
+        Key: uploadedFile.originalname,
+        Body: uploadedFile.buffer,
+      };
+
+      const data = await s3.upload(params).promise();
+
+      // Respond with the URL of the uploaded image
+      res.status(200).json({ imageUrl: data.Location });
+    } catch (error) {
+      console.error('Error handling file upload:', error);
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
+  } else {
+    res.status(405).end(); // Method Not Allowed
+  }
+}
