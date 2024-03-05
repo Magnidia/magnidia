@@ -9,34 +9,31 @@ datasource db {
 }
 
 model Event {
-  id          Int      @id @default(autoincrement())
-  userId      Int      @default(0)
   name        String
-  price       Float    @default(0)
   date        DateTime
-  images      String[]
-  description String   @default("No description provided")
-  address     String   @default("Not specified")
-  cityState   String   @default("Not specified")
-  latitude    Float    @default(0)
-  longitude   Float    @default(0)
-  creator     User     @relation(fields: [userId], references: [id])
   createdAt   DateTime @default(now())
   updatedAt   DateTime @default(now()) @updatedAt
-  Ticket      Ticket[]
+  address     String   @default("Not specified")
+  cityState   String   @default("Not specified")
+  description String   @default("No description provided")
+  images      String[]
+  latitude    Float    @default(0)
+  longitude   Float    @default(0)
+  price       Float    @default(0)
+  userId      Int      @default(0)
+  id          Int      @id @default(autoincrement())
 
   @@index([date])
 }
 
 model User {
-  id       Int      @id @default(autoincrement())
-  email    String   @unique
-  name     String
-  username String   @default("No username provided")
-  profPic  String // url to an image in an S3 bucket: Profile Picture
-  address  String
-  tickets  Ticket[]
-  events   Event[] //  Events created BY this User
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  name      String
+  username  String   @default("No username provided")
+  profPic   String
+  address   String
+  createdAt DateTime @default(now())
 }
 
 model Ticket {
@@ -44,7 +41,6 @@ model Ticket {
   userId       Int
   eventId      Int
   purchaseDate DateTime
+  createdAt    DateTime @default(now())
   valid        Boolean
-  user         User     @relation(fields: [userId], references: [id])
-  event        Event    @relation(fields: [eventId], references: [id])
 }
