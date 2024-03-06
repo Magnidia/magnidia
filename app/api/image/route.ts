@@ -1,52 +1,48 @@
-// api/event/image.ts
-import { NextApiRequest, NextApiResponse } from 'next';
-import multer from 'multer';
-import AWS from 'aws-sdk';
+import { NextResponse } from "next/server";
+import { S3Client, PutObjectCommand, S3ClientConfig } from "@aws-sdk/client-s3";
 
+const s3ClientConfig: S3ClientConfig = {
+    region: process.env.AWS_REGION,
+    credentials: {
+      accessKeyId: process.env.AWS_ACCESS_KEY!,
+      secretAccessKey: process.env.AWS_SECRET_KEY!,
+    },
+  };
 
-declare module 'next' {
-  interface NextApiRequest {
-    file: any;
-  }
-}
-
-const upload = multer({ dest: 'uploads/' });
-
-// Configure AWS
-AWS.config.update({
-  accessKeyId: process.env.AWS_ACCESS_KEY,
-  secretAccessKey: process.env.AWS_SECRET_KEY,
-  region: process.env.AWS_REGION,
-});
-
-const s3 = new AWS.S3();
-
-export const config = {
-  api: {
-    bodyParser: false, // Disable default bodyParser to handle file uploads
-  },
-};
-
-export const POST = async (req: NextApiRequest, res: NextApiResponse) => {
-  try {
-    await upload.single('image')(req as any, res as any, () => {}); // Casting due to multer type mismatch
-
-    // Access the uploaded file information using req.file
-    const uploadedFile = req.file as Express.Multer.File;
-
-    // Implement AWS S3 upload logic
+async function uploadFileToS3(file: Buffer, fileName: string): Promise<string> {
+    const fileBuffer = file;
+    console.log(fileName);
+  
     const params = {
-      Bucket: 'magnidia-imageupload',
-      Key: uploadedFile.originalname,
-      Body: uploadedFile.buffer,
+      Bucket: process.env.AWS_S3_BUCKET_NAME!,
+      Key: `${fileName}`,
+      Body: fileBuffer,
+      ContentType: 'image/jpg',
     };
-
-    const data = await s3.upload(params).promise();
-
-    // Respond with the URL of the uploaded image
-    res.status(200).json({ imageUrl: data.Location });
-  } catch (error) {
-    console.error('Error handling file upload:', error);
-    res.status(500).json({ error: 'Internal Server Error' });
+  
+    const s3Client = new S3Client(); // Instantiate your S3Client
+  
+    const command = new PutObjectCommand(params);
+    await s3Client.send(command);
+  
+    return fileName;
   }
+
+export async function POST(request: { formData: () => any; }) {
+	try {
+
+		const formData = await request.formData();
+		const file = formData.get("file");
+
+		if(!file) {
+			return NextResponse.json( { error: "File is required."}, { status: 400 } );
+		} 
+
+		const buffer = Buffer.from(await file.arrayBuffer());
+		const fileName = await uploadFileToS3(buffer, file.name);
+
+		return NextResponse.json({ success: true, fileName});
+	} catch (error) {
+		return NextResponse.json({ error });
+	}
 }
