@@ -14,9 +14,9 @@ const upload = multer({ dest: 'uploads/' });
 
 // Configure AWS
 AWS.config.update({
-  accessKeyId: 'AKIAVRUVTI43FDMHUBWB',
-  secretAccessKey: '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',
-  region: 'us-east-2',
+  accessKeyId: process.env.AWS_ACCESS_KEY,
+  secretAccessKey: process.env.AWS_SECRET_KEY,
+  region: process.env.AWS_REGION,
 });
 
 const s3 = new AWS.S3();
