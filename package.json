@@ -11,12 +11,18 @@
     "prisma:seed": "ts-node prisma/seed.ts"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.525.0",
     "@prisma/client": "5.8.1",
+    "aws-sdk": "^2.1571.0",
+    "express": "^4.18.3",
+    "multer": "1.4.5-lts.1",
     "next": "14.1.0",
     "react": "^18",
     "react-dom": "^18"
   },
   "devDependencies": {
+    "@types/aws-sdk": "^2.7.0",
+    "@types/multer": "^1.4.11",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
@@ -27,5 +33,10 @@
     "prisma": "^5.8.1",
     "tailwindcss": "^3.3.0",
     "typescript": "^5"
-  }
+  },
+  "description": "Magnidia is an event ticketing and management platform, designed with users in mind.",
+  "main": "postcss.config.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
 }
