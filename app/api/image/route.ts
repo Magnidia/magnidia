@@ -25,7 +25,10 @@ async function uploadFileToS3(file: Buffer, fileName: string): Promise<string> {
     const command = new PutObjectCommand(params);
     await s3Client.send(command);
   
-    return fileName;
+    const objectUrl = `https://magnidia-imageupload.s3.us-east-2.amazonaws.com/${params.Key}`;
+
+    return objectUrl;
+
   }
 
 export async function POST(request: { formData: () => Promise<any> }) {
@@ -39,9 +42,9 @@ export async function POST(request: { formData: () => Promise<any> }) {
 		} 
 
 		const buffer = Buffer.from(await file.arrayBuffer());
-		const fileName = await uploadFileToS3(buffer, file.name);
+		const objectUrl = await uploadFileToS3(buffer, file.name);
 
-		return NextResponse.json({ success: true, fileName});
+		return NextResponse.json({ success: true, objectUrl});
 	} catch (error) {
 		return NextResponse.json({ error });
 	}
