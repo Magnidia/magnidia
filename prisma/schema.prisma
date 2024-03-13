@@ -8,6 +8,17 @@ datasource db {
   directUrl = env("POSTGRES_URL_NON_POOLING")
 }
 
+model User {
+  id       Int      @id @default(autoincrement())
+  email    String   @unique
+  name     String
+  username String   @default("No username provided")
+  profPic  String // url to an image in an S3 bucket: Profile Picture
+  address  String
+  tickets  Ticket[]
+  events   Event[] //  Events created BY this User
+}
+
 model Event {
   id          Int      @id @default(autoincrement())
   userId      Int      @default(0)
@@ -26,17 +37,6 @@ model Event {
   Ticket      Ticket[]
 
   @@index([date])
-}
-
-model User {
-  id       Int      @id @default(autoincrement())
-  email    String   @unique
-  name     String
-  username String   @default("No username provided")
-  profPic  String // url to an image in an S3 bucket: Profile Picture
-  address  String
-  tickets  Ticket[]
-  events   Event[] //  Events created BY this User
 }
 
 model Ticket {
