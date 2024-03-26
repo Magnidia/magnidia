@@ -1,6 +1,10 @@
 export interface CreateEventRequest {
-  name: String;
+  userId: number;
+  name: string; 
   date: Date;
-  location: String;
-  creator: String;
+  description: string;
+  address: string; 
+  cityState: string; 
+  latitude: number; 
+  longitude: number; 
 }
