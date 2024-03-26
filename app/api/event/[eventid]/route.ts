@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import db from "@/utils/db";
 
 
-export const GET = async (req: NextRequest, { params }: { params: { eventid: string } }) => {
+export const GET = async (req: NextRequest, { params }: { params: { eventid: number} }) => {
   try {
       console.log(params.eventid)
       const event = await db.event.findUnique({
@@ -32,7 +32,7 @@ export const GET = async (req: NextRequest, { params }: { params: { eventid: str
   };
   
 
-export const PUT = async (req: NextRequest, { params }: { params: { eventid: string } }) => {
+export const PUT = async (req: NextRequest, { params }: { params: { eventid: number } }) => {
  try {
     const data = await req.json();
     const event = await db.event.update({
@@ -40,7 +40,7 @@ export const PUT = async (req: NextRequest, { params }: { params: { eventid: str
       data: { 
           name: data.name,
           date: data.date,
-          location: data.location,
+          // location: data.location,
           creator: data.creator,
           
        }, 
@@ -60,7 +60,7 @@ export const PUT = async (req: NextRequest, { params }: { params: { eventid: str
 } 
 
     
-    export const DELETE = async (req: NextRequest, { params }: { params: { eventid: string } }) => {
+    export const DELETE = async (req: NextRequest, { params }: { params: { eventid: number } }) => {
       try {
         const event = await db.event.delete({
           where: {   

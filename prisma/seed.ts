@@ -58,7 +58,7 @@ async function seedDatabase() {
 }
 
 async function main() {
-  await clearDatabase();
+  // await clearDatabase();
   await seedDatabase();
 }
 
