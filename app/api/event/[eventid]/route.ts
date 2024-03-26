@@ -2,12 +2,11 @@ import { NextRequest, NextResponse } from "next/server";
 import db from "@/utils/db";
 
 
-export const GET = async (req: NextRequest, { params }: { params: { eventid: string } }) => {
+export const GET = async (req: NextRequest, { params }: { params: { eventid: number } }) => {
   try {
-      console.log(params.eventid)
       const event = await db.event.findUnique({
         where: {
-          id: params.eventid, 
+          id: +params.eventid, 
         }, 
       });
       
@@ -31,17 +30,22 @@ export const GET = async (req: NextRequest, { params }: { params: { eventid: str
     }
   };
   
-
-export const PUT = async (req: NextRequest, { params }: { params: { eventid: string } }) => {
+export const PUT = async (req: NextRequest, { params }: { params: { id: number } }) => {
  try {
     const data = await req.json();
     const event = await db.event.update({
-      where: { id: params.eventid },
+      where: { id: +params.id },
       data: { 
           name: data.name,
           date: data.date,
-          location: data.location,
-          creator: data.creator,
+          address: data.address,
+          userId: data.userId,
+          price: data.price,
+          images: data.images,
+          description: data.description,
+          cityState: data.cityState,
+          latitude: data.latitude,
+          longitude: data.longitude,
           
        }, 
    
@@ -60,11 +64,11 @@ export const PUT = async (req: NextRequest, { params }: { params: { eventid: str
 } 
 
     
-    export const DELETE = async (req: NextRequest, { params }: { params: { eventid: string } }) => {
+    export const DELETE = async (req: NextRequest, { params }: { params: { eventid: number } }) => {
       try {
         const event = await db.event.delete({
           where: {   
-            id: params.eventid, 
+            id: +params.eventid, 
           }, 
         });
         return NextResponse.json(
