@@ -40,16 +40,12 @@ export const PUT = async (
     const ticket = await db.ticket.update({
       where: { id: +params.id },
       data: {
-        name: data.name,
-        date: data.date,
-        address: data.address,
         userId: data.userId,
-        price: data.price,
-        images: data.images,
-        description: data.description,
-        cityState: data.cityState,
-        latitude: data.latitude,
-        longitude: data.longitude,
+        eventId: data.eventId,
+        purchaseDate: data.purchaseDate,
+        valid: data.valid,
+        user: data.user,
+        event: data.event
       },
     });
 
@@ -76,7 +72,7 @@ export const DELETE = async (
       },
     });
     return NextResponse.json(
-      { message: `Successfully deleted ${ticket.name}.` },
+      { message: `Successfully deleted ${ticket.id}.` },
       { status: 200 }
     );
   } catch (error) {
