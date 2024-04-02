@@ -32,6 +32,7 @@ async function seedDatabase() {
     },
   });
 
+  console.log(`Created Event with id: ${event1.id}`);
   const event2 = await prisma.event.create({
     data: {
       name: 'Dummy Event 2',
@@ -42,6 +43,7 @@ async function seedDatabase() {
       date: new Date()
     },
   });
+  console.log(`Created Event with id: ${event2.id}`);
 
   const event3 = await prisma.event.create({
     data: {
@@ -53,13 +55,16 @@ async function seedDatabase() {
       date: new Date()
     },
   });
+  console.log(`Created Event with id: ${event3.id}`);
 
 
 }
 
 async function main() {
-  // await clearDatabase();
+  await clearDatabase();
+  console.log("Cleared the database");
   await seedDatabase();
+  console.log("Seeded the database");
 }
 
 main()
