@@ -6,8 +6,6 @@ async function main() {
     data: {
       email: "alice@example.com",
       name: "Alice",
-      profPic: "http://example.com/path/to/image",
-      address: "123 Main St",
     },
   });
   console.log(`Created user with id: ${user.id}`);
