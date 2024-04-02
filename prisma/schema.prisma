@@ -22,16 +22,19 @@ model Event {
   price       Float    @default(0)
   userId      Int      @default(0)
   id          Int      @id @default(autoincrement())
+  Ticket      Ticket[]
 
   @@index([date])
 }
 
 model Ticket {
   id           Int      @id @default(autoincrement())
-  userId       Int
+  userId       String
   eventId      Int
   purchaseDate DateTime
   valid        Boolean
+  user         User     @relation(fields: [userId], references: [id])
+  event        Event    @relation(fields: [eventId], references: [id])
   createdAt    DateTime @default(now())
   updatedAt    DateTime @default(now()) @updatedAt
 }
@@ -46,6 +49,7 @@ model User {
   sessions      Session[]
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @default(now()) @updatedAt
+  Ticket        Ticket[]
 }
 
 model Account {
