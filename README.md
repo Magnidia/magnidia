@@ -1,5 +1,7 @@
 # Magnidia
 
+<img width="423" alt="image" src="https://github.com/Magnidia/magnidia/assets/30994047/05964e9f-09ff-4fd7-8344-c429edbbb3df">
+
 Magnidia is an event ticketing and management platform, designed with users in mind.
 
 ## What do I Need to Install?
