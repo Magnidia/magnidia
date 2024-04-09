@@ -8,7 +8,7 @@ export const GET = async (
   try {
     const event = await db.event.findUnique({
       where: {
-        id: params.eventid,
+        id: +params.eventid,
       },
     });
 
@@ -33,16 +33,23 @@ export const GET = async (
 
 export const PUT = async (
   req: NextRequest,
-  { params }: { params: { eventid: number } }
+  { params }: { params: { id: number } }
 ) => {
   try {
     const data = await req.json();
     const event = await db.event.update({
-      where: { id: params.eventid },
+      where: { id: +params.id },
       data: {
         name: data.name,
         date: data.date,
-        creator: data.creator,
+        address: data.address,
+        userId: data.userId,
+        price: data.price,
+        images: data.images,
+        description: data.description,
+        cityState: data.cityState,
+        latitude: data.latitude,
+        longitude: data.longitude,
       },
     });
 
@@ -65,7 +72,7 @@ export const DELETE = async (
   try {
     const event = await db.event.delete({
       where: {
-        id: params.eventid,
+        id: +params.eventid,
       },
     });
     return NextResponse.json(
