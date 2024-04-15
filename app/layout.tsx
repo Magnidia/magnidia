@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import fonts from "@/utils/fonts";
 import "./globals.css";
+import Nav from "@/components/Nav";
 
 export const metadata: Metadata = {
   title: "Magnidia",
@@ -14,7 +15,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={fonts}>{children}</body>
+      <body 
+        className={fonts}> <Nav /> {children}
+      
+      </body>
+
     </html>
   );
 }

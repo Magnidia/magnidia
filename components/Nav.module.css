@@ -1,0 +1,18 @@
+.navbar {
+    position: fixed;
+    margin-left: auto;
+    right: 5%;
+    top: 20px;
+    width: 90%;
+    height: 7%;
+    border-radius: 25px;
+    background-color: aliceblue;
+    border-bottom: black;
+}
+
+.logo-container {
+    position: fixed;
+    top: 3.5%;
+    left: 7%;
+    width: 13%;
+}
