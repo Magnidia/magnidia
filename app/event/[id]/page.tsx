@@ -52,7 +52,7 @@ export default async function Home({ params }: { params: { id: number } }) {
                   href={`/user/${event.userId}`}
                   className="text-sm italic cursor-pointer hover:underline"
                 >
-                  @{event.creator.username}
+                  @{event.creator.email}
                 </Link>
                 <p className="mt-4">
                   <span className="font-bold">Contact: </span>
