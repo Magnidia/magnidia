@@ -7,8 +7,11 @@ export const getEvents = async () => {
 };
 
 export const getEventById = async (id: number) => {
-  const event: Event | null = await db.event.findUnique({
+  const event = await db.event.findUnique({
     where: { id: +id },
+    include: {
+      creator: true,
+    },
   });
   return event;
 };
