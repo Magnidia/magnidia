@@ -9,42 +9,72 @@ datasource db {
 }
 
 model Event {
-  id          Int      @id @default(autoincrement())
-  userId      Int      @default(0)
   name        String
-  price       Float    @default(0)
   date        DateTime
-  images      String[]
-  description String   @default("No description provided")
-  address     String   @default("Not specified")
-  cityState   String   @default("Not specified")
-  latitude    Float    @default(0)
-  longitude   Float    @default(0)
-  creator     User     @relation(fields: [userId], references: [id])
   createdAt   DateTime @default(now())
   updatedAt   DateTime @default(now()) @updatedAt
+  address     String   @default("Not specified")
+  cityState   String   @default("Not specified")
+  description String   @default("No description provided")
+  images      String[]
+  latitude    Float    @default(0)
+  longitude   Float    @default(0)
+  price       Float    @default(0)
+  userId      Int      @default(0)
+  id          Int      @id @default(autoincrement())
   Ticket      Ticket[]
 
   @@index([date])
 }
 
-model User {
-  id       Int      @id @default(autoincrement())
-  email    String   @unique
-  name     String
-  username String   @default("No username provided")
-  profPic  String // url to an image in an S3 bucket: Profile Picture
-  address  String
-  tickets  Ticket[]
-  events   Event[] //  Events created BY this User
-}
-
 model Ticket {
   id           Int      @id @default(autoincrement())
-  userId       Int
+  userId       String
   eventId      Int
   purchaseDate DateTime
   valid        Boolean
   user         User     @relation(fields: [userId], references: [id])
   event        Event    @relation(fields: [eventId], references: [id])
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @default(now()) @updatedAt
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String?
+  accounts      Account[]
+  sessions      Session[]
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @default(now()) @updatedAt
+  Ticket        Ticket[]
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
