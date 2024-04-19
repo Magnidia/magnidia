@@ -18,6 +18,7 @@ export default async function Home() {
         <Link
           href={`/event/${event.id}`}
           className="bg-lightBlue w-50 p-10 rounded-lg"
+          key={event.id}
         >
           <h1 className="font-bold text-lg">{event.name}</h1>
           <p>{event.address}</p>
