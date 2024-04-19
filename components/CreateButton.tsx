@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { CreateEventRequest } from "@/types";
 import { FC, useState } from "react";
@@ -6,7 +6,7 @@ import React from "react";
 
 const CreateButton: FC = () => {
   const [eventDetails, setEventDetails] = useState<CreateEventRequest>({
-    userId: 1, 
+    userId: "clv1g1vre0000438yjm6fj9fc",
     name: "",
     date: new Date(),
     description: "",
@@ -29,7 +29,7 @@ const CreateButton: FC = () => {
       if (response.ok) {
         alert("Event created successfully.");
         setEventDetails({
-          userId: 1,
+          userId: "clv1g1vre0000438yjm6fj9fc",
           name: "",
           date: new Date(),
           description: "",
@@ -52,11 +52,12 @@ const CreateButton: FC = () => {
   ) => {
     const { name, value } = e.target;
 
-    const newValue = name === "date"
-    ? new Date(value)
-    : name === "latitude" || name === "longitude"
-    ? parseFloat(value)
-    : value;
+    const newValue =
+      name === "date"
+        ? new Date(value)
+        : name === "latitude" || name === "longitude"
+        ? parseFloat(value)
+        : value;
 
     setEventDetails((prevDetails) => ({
       ...prevDetails,
@@ -82,7 +83,7 @@ const CreateButton: FC = () => {
         <input
           type="date"
           name="date"
-          value={eventDetails.date.toISOString().split('T')[0]}
+          value={eventDetails.date.toISOString().split("T")[0]}
           onChange={handleInputChange}
           style={{ color: "black" }}
         />
