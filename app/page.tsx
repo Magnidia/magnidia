@@ -14,7 +14,7 @@ export default async function Home() {
   }
 
   return (
-    <main className="min-h-screen flex flex-col items-center justify-start gap-10 pt-44">
+    <main className="min-h-screen flex flex-col items-center justify-start gap-10 pt-44 bg-lighterBlue">
       {events.map((event) => (
         <EventCard event={event} key={event.id} />
       ))}
