@@ -18,7 +18,7 @@ const EventCard: FC<EventCardProps> = ({ event }) => {
 
   return (
     <Link
-      className="rounded-xl relative w-10/12 h-52 overflow-hidden p-10 cursor-pointer"
+      className="rounded-xl relative w-10/12 h-52 overflow-hidden p-10 cursor-pointer transition-all hover:shadow-xl hover:-translate-y-1"
       href={`/event/${event.id}`}
       key={event.id}
     >
