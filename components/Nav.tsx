@@ -14,7 +14,7 @@ const Nav: React.FC = () => {
           <Link href="/" className="text-sm font-semibold">
             Home
           </Link>
-          <Link href="/create-event" className="text-sm font-semibold">
+          <Link href="/event/create" className="text-sm font-semibold">
             Create Event
           </Link>
           <Link href="/authtest" className="text-sm font-semibold">
