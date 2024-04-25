@@ -42,7 +42,11 @@ export default async function Home({ params }: { params: { id: number } }) {
             </div>
             <div className="p-10">
               <h2 className="text-4xl mb-5">LOCATION:</h2>
-              <Map latitude={event.latitude} longitude={event.longitude} />
+              <Map
+                latitude={event.latitude}
+                longitude={event.longitude}
+                styles={{ width: "65%", height: "500px" }}
+              />
             </div>
             <div className="p-10">
               <h2 className="text-4xl mb-5">ABOUT THE ORGANIZER:</h2>

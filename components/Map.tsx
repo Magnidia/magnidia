@@ -7,15 +7,17 @@ import { useLoadScript, GoogleMap, Marker } from "@react-google-maps/api";
 interface MapProps {
   latitude: number;
   longitude: number;
+  styles: React.CSSProperties;
 }
 
-const Map: FC<MapProps> = ({ latitude, longitude }) => {
+const Map: FC<MapProps> = ({ latitude, longitude, styles }) => {
   const libraries = useMemo(() => ["places"], []);
   const eventPosition = useMemo(() => ({ lat: latitude, lng: longitude }), []);
 
   const mapOptions = useMemo<google.maps.MapOptions>(
     () => ({
-      disableDefaultUI: false,
+      disableDefaultUI: true,
+      zoomControl: true,
       clickableIcons: false,
       scrollwheel: false,
       styles: [
@@ -42,7 +44,7 @@ const Map: FC<MapProps> = ({ latitude, longitude }) => {
       zoom={14}
       center={eventPosition}
       mapTypeId={google.maps.MapTypeId.ROADMAP}
-      mapContainerStyle={{ width: "65%", height: "500px" }}
+      mapContainerStyle={styles}
       onLoad={() => console.log("Map Component Loaded...")}
     >
       <Marker position={eventPosition} />
