@@ -34,7 +34,7 @@ const EventCard: FC<EventCardProps> = ({ event }) => {
         <div className="flex flex-col h-full z-40 justify-end">
           <h1 className="text-4xl text-white font-bold">{event.name}</h1>
           <span className="text-lg text-white font-semibold">
-            {event.cityState}
+            {event.city}, {event.state}
           </span>
         </div>
         <span className="text-xl text-white font-semibold z-40">

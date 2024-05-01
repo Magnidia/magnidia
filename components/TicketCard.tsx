@@ -32,7 +32,9 @@ const TicketCard: FC<TicketCardProps> = ({ event }) => {
           <IoIosPin className="w-12 h-auto text-[#05233E] mr-5" />
           <div className="flex flex-col">
             <span>{event.address}</span>
-            <span>{event.cityState}</span>
+            <span>
+              {event.city}, {event.state}
+            </span>
           </div>
         </div>
         <div className="flex flex-row px-5 justify-start mb-10">
