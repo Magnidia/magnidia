@@ -39,18 +39,7 @@ export const PUT = async (
     const data = await req.json();
     const event = await db.event.update({
       where: { id: +params.id },
-      data: {
-        name: data.name,
-        date: data.date,
-        address: data.address,
-        userId: data.userId,
-        price: data.price,
-        images: data.images,
-        description: data.description,
-        cityState: data.cityState,
-        latitude: data.latitude,
-        longitude: data.longitude,
-      },
+      data,
     });
 
     return NextResponse.json(
