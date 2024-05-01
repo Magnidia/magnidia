@@ -2,14 +2,15 @@
 
 import Map from "@/components/Map";
 import { useState } from "react";
-import { Calendar } from "@rewind-ui/core";
+import { Calendar, Input, Textarea, Button } from "@rewind-ui/core";
 import { IoMdCloudUpload } from "react-icons/io";
 import { isValid, format } from "date-fns";
-import { Input } from "@rewind-ui/core";
 
 interface FormData {
   name: string;
-  date: Date | null | undefined;
+  date: Date;
+  startTime: Date;
+  endTime: Date;
   address: string;
   city: string;
   state: string;
@@ -24,6 +25,8 @@ const CreateEventPage = () => {
   const initialFormData: FormData = {
     name: "",
     date: new Date(),
+    startTime: new Date(),
+    endTime: new Date(),
     address: "",
     city: "",
     state: "",
@@ -34,15 +37,26 @@ const CreateEventPage = () => {
     price: 0,
   };
 
-  const [date, setDate] = useState<Date | null | undefined>(new Date());
-
   const [formData, setFormData] = useState<FormData>(initialFormData);
 
-  const handleChange = (e: any) => {
-    const { name, value } = e.target;
+  const handleChange = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = event.target;
     setFormData((prevState) => ({
       ...prevState,
       [name]: value,
+    }));
+  };
+
+  const handleTimeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+    const newDate = new Date(formData.date);
+    const [hours, minutes] = value.split(":").map(Number);
+    newDate.setHours(hours, minutes);
+    setFormData((prevState) => ({
+      ...prevState,
+      [name]: newDate,
     }));
   };
 
@@ -57,44 +71,65 @@ const CreateEventPage = () => {
       <div className="rounded-md border border-black bg-white w-10/12 mb-20">
         {formData && (
           <div className="flex flex-col">
-            <div className="flex flex-row p-10 gap-10">
-              <div className="flex flex-col w-1/3">
+            <div className="flex flex-row flex-wrap lg:flex-nowrap p-10 gap-10">
+              <div className="flex flex-col w-full">
                 <h1 className="font-bold text-2xl">NAME OF EVENT:</h1>
-                <input
+                <Input
                   type="text"
                   placeholder="NAME"
-                  className="border rounded-md p-1 mt-4"
-                ></input>
+                  className="p-1 mt-4"
+                  value={formData.name}
+                  onChange={handleChange}
+                  name="name"
+                />
                 <span className="font-bold text-lg mt-8">DESCRIPTION:</span>
-                <textarea
+                <Textarea
                   placeholder="DESCRIPTION"
-                  className="w-full h-64 border rounded-md mt-4"
-                ></textarea>
-                <button className="w-full max-w-80 m-auto text-lg font-semibold rounded-lg bg-lightGrey hover:bg-[#BBBBBB] p-6 mt-8">
+                  className="h-72 mt-4 pt-3"
+                  value={formData.description}
+                  onChange={handleChange}
+                  name="description"
+                  size="lg"
+                />
+                <Button
+                  className="w-full m-auto mt-8"
+                  color="gray"
+                  size="lg"
+                  shadow="base"
+                >
                   UPLOAD IMAGE
-                  <IoMdCloudUpload className="text-2xl inline-block ml-4" />
-                </button>
+                  <IoMdCloudUpload className="text-xl inline-block ml-3" />
+                </Button>
               </div>
-              <div className="flex flex-col w-1/3">
+              <div className="flex flex-col w-full">
                 <span className="font-bold text-lg">SET LOCATION:</span>
-                <input
+                <Input
                   placeholder="ADDRESS"
-                  className="border rounded-md p-1 mt-4"
-                ></input>
-                <input
+                  className="p-1 mt-4"
+                  value={formData.address}
+                  onChange={handleChange}
+                  name="address"
+                />
+                <Input
                   placeholder="CITY"
-                  className="border rounded-md p-1 mt-4"
-                ></input>
-                <input
+                  className="p-1 mt-4"
+                  value={formData.city}
+                  onChange={handleChange}
+                  name="city"
+                />
+                <Input
                   placeholder="STATE"
-                  className="border rounded-md p-1 mt-4"
-                ></input>
+                  className="p-1 mt-4"
+                  value={formData.state}
+                  onChange={handleChange}
+                  name="state"
+                />
                 <Map
-                  latitude={0}
-                  longitude={0}
+                  latitude={formData.latitude}
+                  longitude={formData.longitude}
                   styles={{
                     width: "100%",
-                    height: "200px",
+                    height: "190px",
                     border: "1px solid black",
                     borderRadius: "10px",
                     marginTop: "2rem",
@@ -102,48 +137,64 @@ const CreateEventPage = () => {
                 />
                 <span className="font-bold text-lg mt-8">SET PRICE:</span>
                 <div className="flex flex-row items-center">
-                  <input
+                  <Input
                     placeholder="PRICE"
-                    className="border rounded-md p-1 mt-4"
+                    className="p-1 mt-4"
                     type="number"
-                  ></input>
+                    value={formData.price}
+                    onChange={handleChange}
+                    name="price"
+                  />
                   <span className="font-bold text-lg mt-4 ml-4">USD</span>
                 </div>
               </div>
-              <div className="flex flex-col w-1/3">
+              <div className="flex flex-col w-full">
                 <span className="font-bold text-lg">SET DATE:</span>
                 <Calendar
                   value={formData.date}
-                  onChange={(updatedDate) => {
-                    if (updatedDate && isValid(updatedDate)) {
+                  onChange={(date) => {
+                    if (date && isValid(date)) {
                       setFormData((prevState) => ({
                         ...prevState,
-                        date: updatedDate,
+                        date,
                       }));
                     }
                   }}
+                  disabledWeekends={false}
                   shadow="md"
-                  size="md"
+                  size="lg"
                   className="mt-8"
                 />
-                <span className="font-bold text-lg mt-12">SET DURATION:</span>
+                <span className="font-bold text-lg mt-7">SET DURATION:</span>
                 <div className="flex flex-row items-center">
-                  <input
+                  <Input
+                    className="p-1 mt-4"
                     type="time"
-                    className="w-1/3 border rounded-md p-1 mt-4"
-                  ></input>
+                    value={format(formData.startTime, "HH:mm")}
+                    onChange={handleTimeChange}
+                    name="startTime"
+                  />
                   <span className="font-bold text-lg mt-4 mx-4">TO</span>
-                  <input
+                  <Input
+                    className="p-1 mt-4"
                     type="time"
-                    className="w-1/3 border rounded-md p-1 mt-4"
-                  ></input>
+                    value={format(formData.endTime, "HH:mm")}
+                    onChange={handleTimeChange}
+                    name="endTime"
+                  />
                 </div>
               </div>
             </div>
             <div className="flex flex-row justify-center items-center w-full border-t-2 border-dashed border-black p-10">
-              <button className="text-lg font-semibold bg-lightBlue hover:bg-[#9ac0e1] transition-all p-5 rounded-md w-10/12 max-w-md">
+              <Button
+                className="w-10/12 max-w-md"
+                color="blue"
+                shadow="base"
+                size="lg"
+                onClick={handleSubmit}
+              >
                 PUBLISH
-              </button>
+              </Button>
             </div>
           </div>
         )}

@@ -5,7 +5,7 @@ const config: Config = {
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
-    "./node_modules/@rewind-ui/core/dist/theme/styles/Calendar.styles.js",
+    "./node_modules/@rewind-ui/core/dist/theme/styles/*.js",
   ],
   theme: {
     extend: {
