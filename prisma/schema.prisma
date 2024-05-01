@@ -11,10 +11,13 @@ datasource db {
 model Event {
   name        String
   date        DateTime
+  startTime   DateTime @default(now())
+  endTime     DateTime @default(now())
   createdAt   DateTime @default(now())
   updatedAt   DateTime @default(now()) @updatedAt
   address     String   @default("Not specified")
-  cityState   String   @default("Not specified")
+  city        String   @default("Not specified")
+  state       String   @default("Not specified")
   description String   @default("No description provided")
   images      String[]
   latitude    Float    @default(0)
