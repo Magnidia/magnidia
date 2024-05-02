@@ -27,7 +27,7 @@ const EventCard: FC<EventCardProps> = ({ event }) => {
         width={0}
         height={0}
         sizes="100vw"
-        src={event.images[0]}
+        src={event.imageUrl}
         alt="Image of event"
       />
       <div className="flex flex-row h-full items-center justify-between">
