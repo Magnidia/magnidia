@@ -19,7 +19,7 @@ model Event {
   city        String   @default("Not specified")
   state       String   @default("Not specified")
   description String   @default("No description provided")
-  images      String[]
+  imageUrl    String   @default("https://via.placeholder.com/150")
   latitude    Float    @default(0)
   longitude   Float    @default(0)
   price       Float    @default(0)
