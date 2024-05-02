@@ -38,7 +38,7 @@ export default async function Home({ params }: { params: { id: number } }) {
             </div>
             <div className="p-10">
               <h2 className="text-4xl mb-5">EVENT INFORMATION:</h2>
-              <p>{event.description}</p>
+              <p className="w-2/3">{event.description}</p>
             </div>
             <div className="p-10">
               <h2 className="text-4xl mb-5">LOCATION:</h2>

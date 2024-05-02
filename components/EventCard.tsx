@@ -38,7 +38,7 @@ const EventCard: FC<EventCardProps> = ({ event }) => {
           </span>
         </div>
         <span className="text-xl text-white font-semibold z-40">
-          {event.date.toLocaleTimeString("en-us", dateOptions)}
+          {event.startTime.toLocaleTimeString("en-us", dateOptions)}
         </span>
       </div>
     </Link>

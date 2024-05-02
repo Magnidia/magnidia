@@ -26,7 +26,7 @@ const TicketCard: FC<TicketCardProps> = ({ event }) => {
   };
 
   return (
-    <div className="fixed top-60 right-10 w-72 bg-white rounded-lg border border-[#05233E]">
+    <div className="absolute top-60 right-10 w-72 bg-white rounded-lg border border-[#05233E]">
       <div className="flex flex-col mt-3">
         <div className="flex flex-row p-5 justify-start">
           <IoIosPin className="w-12 h-auto text-[#05233E] mr-5" />
@@ -48,14 +48,14 @@ const TicketCard: FC<TicketCardProps> = ({ event }) => {
           <div className="flex flex-col justify-center text-center w-full">
             <span className="font-semibold text-white">START</span>
             <span className="text-white">
-              {event.date.toLocaleTimeString("en-us", timeOptions)}
+              {event.startTime.toLocaleTimeString("en-us", timeOptions)}
             </span>
           </div>
           <div className="w-px h-full bg-white align-middle"></div>
           <div className="flex flex-col justify-center text-center w-full">
             <span className="font-semibold text-white">END</span>
             <span className="text-white">
-              {event.date.toLocaleTimeString("en-us", timeOptions)}
+              {event.endTime.toLocaleTimeString("en-us", timeOptions)}
             </span>
           </div>
         </div>
