@@ -40,9 +40,9 @@ export async function POST(request: NextRequest) {
 
     if (file) {
       const buffer = Buffer.from(await file.arrayBuffer());
-      const objectUrl = await uploadFileToS3(buffer, file.name);
+      const imageUrl = await uploadFileToS3(buffer, file.name);
 
-      return NextResponse.json({ success: true, objectUrl }, { status: 201 });
+      return NextResponse.json({ success: true, imageUrl }, { status: 201 });
     } else {
       return NextResponse.json({ error: "File is required." }, { status: 400 });
     }
