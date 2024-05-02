@@ -5,15 +5,12 @@ import React from "react";
 import { useLoadScript, GoogleMap, Marker } from "@react-google-maps/api";
 
 interface MapProps {
-  latitude: number;
-  longitude: number;
+  lat: number;
+  lng: number;
   styles: React.CSSProperties;
 }
 
-const Map: FC<MapProps> = ({ latitude, longitude, styles }) => {
-  const libraries = useMemo(() => ["places"], []);
-  const eventPosition = useMemo(() => ({ lat: latitude, lng: longitude }), []);
-
+const Map: FC<MapProps> = ({ lat, lng, styles }) => {
   const mapOptions = useMemo<google.maps.MapOptions>(
     () => ({
       disableDefaultUI: true,
@@ -42,12 +39,12 @@ const Map: FC<MapProps> = ({ latitude, longitude, styles }) => {
     <GoogleMap
       options={mapOptions}
       zoom={14}
-      center={eventPosition}
+      center={{ lat: lat || 0, lng: lng || 0 }}
       mapTypeId={google.maps.MapTypeId.ROADMAP}
       mapContainerStyle={styles}
       onLoad={() => console.log("Map Component Loaded...")}
     >
-      <Marker position={eventPosition} />
+      {lat && lng && <Marker position={{ lat, lng }} />}
     </GoogleMap>
   );
 };
