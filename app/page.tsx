@@ -1,3 +1,4 @@
+import EventCard from "@/components/EventCard";
 import TicketCard from "@/components/TicketCard";
 import { getEvents } from "@/utils/event";
 import { Event } from "@prisma/client";
@@ -13,18 +14,9 @@ export default async function Home() {
   }
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-start pt-24 gap-5">
+    <main className="min-h-screen flex flex-col items-center justify-start gap-10 pt-44 bg-lighterBlue">
       {events.map((event) => (
-        <Link
-          href={`/event/${event.id}`}
-          className="bg-lightBlue w-50 p-10 rounded-lg"
-          key={event.id}
-        >
-          <h1 className="font-bold text-lg">{event.name}</h1>
-          <p>{event.address}</p>
-          <p>{event.cityState}</p>
-          <p>{event.description}</p>
-        </Link>
+        <EventCard event={event} key={event.id} />
       ))}
     </main>
   );

@@ -7,16 +7,18 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
     if (!data.userId) {
       throw new Error("Missing required field: userId");
     }
-    console.log(data)
     const event = await db.event.create({ data });
 
     return NextResponse.json(
-      { message: "Successfully created new event." },
+      { message: "Successfully created new event.", eventId: event.id },
       { status: 201 }
     );
   } catch (error) {
     console.log(error);
-    if (error instanceof Error && error.message == "Missing required field: userId") {
+    if (
+      error instanceof Error &&
+      error.message == "Missing required field: userId"
+    ) {
       return NextResponse.json(
         { message: "User ID is required to create an event." },
         { status: 400 } // Bad request

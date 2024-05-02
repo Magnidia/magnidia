@@ -22,7 +22,7 @@ export default async function Home({ params }: { params: { id: number } }) {
             <div className="w-full h-96 relative overflow-hidden">
               <Image
                 alt="Event Image"
-                src={event.images[0]}
+                src={event.imageUrl}
                 width={0}
                 height={0}
                 sizes="100vw"
@@ -38,11 +38,15 @@ export default async function Home({ params }: { params: { id: number } }) {
             </div>
             <div className="p-10">
               <h2 className="text-4xl mb-5">EVENT INFORMATION:</h2>
-              <p>{event.description}</p>
+              <p className="w-2/3">{event.description}</p>
             </div>
             <div className="p-10">
               <h2 className="text-4xl mb-5">LOCATION:</h2>
-              <Map latitude={event.latitude} longitude={event.longitude} />
+              <Map
+                lat={event.latitude}
+                lng={event.longitude}
+                styles={{ width: "65%", height: "500px" }}
+              />
             </div>
             <div className="p-10">
               <h2 className="text-4xl mb-5">ABOUT THE ORGANIZER:</h2>

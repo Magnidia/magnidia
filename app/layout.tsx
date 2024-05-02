@@ -15,11 +15,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body 
-        className={fonts}> <Nav /> {children}
-      
+      <body className={fonts}>
+        <Nav />
+        {children}
       </body>
-
     </html>
   );
 }
