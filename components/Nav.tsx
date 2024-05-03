@@ -7,10 +7,6 @@ import { usePathname } from "next/navigation";
 const Nav: React.FC = () => {
   const pathname = usePathname();
 
-  if (pathname === "/") {
-    return null;
-  }
-
   return (
     <nav className="fixed left-2/4 top-10 -translate-x-2/4 w-11/12 rounded-full bg-white z-50 shadow-2xl p-5">
       <div className="flex flex-row">
@@ -20,10 +16,20 @@ const Nav: React.FC = () => {
           </Link>
         </div>
         <div className="flex flex-row justify-end items-center w-full mr-5 gap-7">
-          <Link href="/feed" className="text-sm font-semibold">
+          <Link
+            href="/feed"
+            className={`text-sm font-semibold ${
+              pathname == "/feed" ? "text-primary" : ""
+            }`}
+          >
             Home
           </Link>
-          <Link href="/event/create" className="text-sm font-semibold">
+          <Link
+            href="/event/create"
+            className={`text-sm font-semibold ${
+              pathname == "/event/create" ? "text-primary" : ""
+            }`}
+          >
             Create Event
           </Link>
           <Link href="/authtest" className="text-sm font-semibold">
