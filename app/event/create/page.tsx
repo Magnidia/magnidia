@@ -22,7 +22,7 @@ interface EventData {
   userId: string;
 }
 
-const CreateEventPage = () => {
+export default async function Home() {
   const initialEventData: EventData = {
     name: "",
     date: new Date(),
@@ -273,6 +273,4 @@ const CreateEventPage = () => {
       </div>
     </main>
   );
-};
-
-export default CreateEventPage;
+}
