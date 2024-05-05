@@ -14,3 +14,10 @@ export const getEventById = async (id: number) => {
   });
   return event;
 };
+
+export const getEventsByUserId = async (userId: string) => {
+  const events = await db.event.findMany({
+    where: { userId: userId },
+  });
+  return events;
+};

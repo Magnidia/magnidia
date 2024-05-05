@@ -3,8 +3,13 @@
 import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { Session } from "next-auth";
 
-const Nav: React.FC = () => {
+type NavProps = {
+  session: Session;
+};
+
+const Nav: React.FC<NavProps> = ({ session }: NavProps) => {
   const pathname = usePathname();
 
   return (
@@ -32,7 +37,12 @@ const Nav: React.FC = () => {
           >
             Create Event
           </Link>
-          <Link href="/authtest" className="text-sm font-semibold">
+          <Link
+            href={`/user/${session.user?.id}`}
+            className={`text-sm font-semibold ${
+              pathname == `/user/${session.user?.id}` ? "text-primary" : ""
+            }`}
+          >
             My Account
           </Link>
         </div>
