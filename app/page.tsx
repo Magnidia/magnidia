@@ -6,7 +6,7 @@ import Image from "next/image";
 
 export default function Home() {
   return (
-    <div className="w-full max-h-full">
+    <div className="relative w-full h-screen overflow-hidden">
       <div className="w-full flex flex-row items-center justify-between p-8">
         <Image
           src={"/logo.png"}
@@ -44,7 +44,7 @@ export default function Home() {
         width={0}
         height={0}
         sizes="100vw"
-        className="w-full h-auto absolute top-0 left-0"
+        className="min-w-[90rem] w-full h-auto absolute top-0 left-0"
       ></Image>
     </div>
   );
