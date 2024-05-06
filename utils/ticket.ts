@@ -1,4 +1,6 @@
 import db from "@/utils/db";
+import { getServerSession } from "next-auth";
+import { authOptions } from "./auth";
 
 export const getTicketById = async (id: number) => {
   const ticket = await db.ticket.findUnique({
@@ -12,6 +14,12 @@ export const getTicketById = async (id: number) => {
       },
     },
   });
+
+  const session = await getServerSession(authOptions);
+
+  if (!session || !ticket || ticket.userId !== session.user.id) {
+    return;
+  }
 
   return ticket;
 };
