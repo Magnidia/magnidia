@@ -4,6 +4,8 @@ import { Button } from "@rewind-ui/core";
 import { signIn } from "next-auth/react";
 import Image from "next/image";
 
+import landingImg from "../public/landing.jpg";
+
 export default function Home() {
   return (
     <div className="relative w-full h-screen overflow-hidden">
@@ -40,7 +42,7 @@ export default function Home() {
       </div>
       <Image
         alt="Event Image"
-        src="/landing.jpg"
+        src={landingImg}
         width={0}
         height={0}
         sizes="100vw"
