@@ -5,18 +5,13 @@ import { signIn } from "next-auth/react";
 import Image from "next/image";
 
 import landingImg from "../public/landing.jpg";
+import logo from "../public/logo.png";
 
 export default function Home() {
   return (
     <div className="relative w-full h-screen overflow-hidden">
       <div className="w-full flex flex-row items-center justify-between p-8">
-        <Image
-          src={"/logo.png"}
-          width={300}
-          height={0}
-          alt="Logo"
-          className="z-10"
-        />
+        <Image src={logo} width={300} height={0} alt="Logo" className="z-10" />
         <div className="flex flex-row z-10 gap-5">
           <Button
             color="blue"
