@@ -1,6 +1,5 @@
 import { useMemo } from "react";
 import Image from "next/image";
-import { Event } from "@prisma/client";
 import { getEventById } from "@/utils/event";
 import Map from "@/components/Map";
 import TicketCard from "@/components/TicketCard";

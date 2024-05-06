@@ -19,10 +19,9 @@ interface EventData {
   latitude: number;
   longitude: number;
   price: number;
-  userId: string;
 }
 
-const CreateEventPage = () => {
+export default function Home() {
   const initialEventData: EventData = {
     name: "",
     date: new Date(),
@@ -36,7 +35,6 @@ const CreateEventPage = () => {
     latitude: 0,
     longitude: 0,
     price: 0,
-    userId: "clv1g1vre0000438yjm6fj9fc",
   };
 
   const router = useRouter();
@@ -273,6 +271,4 @@ const CreateEventPage = () => {
       </div>
     </main>
   );
-};
-
-export default CreateEventPage;
+}
