@@ -1,12 +1,14 @@
 import SignOutButton from "@/components/SignOutButton";
 import UserInformation from "@/components/UserInformation";
 import { getEventsByUserId } from "@/utils/event";
+import { getTicketsByUserId } from "@/utils/ticket";
 import { getUserById } from "@/utils/user";
 import Image from "next/image";
 
 export default async function Home({ params }: { params: { id: string } }) {
   const user = await getUserById(params.id);
   const events = await getEventsByUserId(params.id);
+  const tickets = await getTicketsByUserId(params.id);
 
   if (!user) {
     return (
@@ -35,7 +37,7 @@ export default async function Home({ params }: { params: { id: string } }) {
           <SignOutButton />
         </div>
       </div>
-      <UserInformation events={events} />
+      <UserInformation events={events} tickets={tickets} />
     </div>
   );
 }

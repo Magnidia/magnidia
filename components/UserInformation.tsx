@@ -6,12 +6,12 @@ import { Ticket, Event } from "@prisma/client";
 import EventCard from "./EventCard";
 
 interface UserInformationProps {
-  //tickets: Ticket[];
+  tickets: Ticket[];
   events: Event[];
 }
 
 const UserInformation: FC<UserInformationProps> = ({
-  //tickets,
+  tickets,
   events,
 }: UserInformationProps) => {
   const [showTickets, setShowTickets] = useState(true);
@@ -43,6 +43,7 @@ const UserInformation: FC<UserInformationProps> = ({
       <div className="w-full flex flex-col items-center">
         {!showTickets &&
           events.map((event) => <EventCard event={event} key={event.id} />)}
+        {showTickets && tickets.map((ticket) => <p>{ticket.id}</p>)}
       </div>
     </>
   );
