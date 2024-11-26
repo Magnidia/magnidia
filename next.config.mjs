@@ -4,7 +4,7 @@ const nextConfig = {
     domains: [
       "localhost",
       "lh3.googleusercontent.com",
-      "magnidia-imageupload.s3.us-east-2.amazonaws.com",
+      "magnidia.s3.us-east-2.amazonaws.com",
     ],
   },
 };
